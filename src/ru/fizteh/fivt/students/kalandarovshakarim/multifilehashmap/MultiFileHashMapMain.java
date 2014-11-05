@@ -4,6 +4,7 @@
  */
 package ru.fizteh.fivt.students.kalandarovshakarim.multifilehashmap;
 
+import java.io.IOException;
 import ru.fizteh.fivt.students.kalandarovshakarim.multifilehashmap.database.DataBase;
 import ru.fizteh.fivt.students.kalandarovshakarim.shell.Shell;
 import ru.fizteh.fivt.students.kalandarovshakarim.shell.commands.Command;
@@ -23,6 +24,8 @@ public class MultiFileHashMapMain {
         } catch (IllegalArgumentException e) {
             System.err.println(e.getMessage());
             System.exit(1);
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
         }
 
         Command[] commands = new Command[]{

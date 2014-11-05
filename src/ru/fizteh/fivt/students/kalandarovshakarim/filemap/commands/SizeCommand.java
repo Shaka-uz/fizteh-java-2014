@@ -4,8 +4,8 @@
  */
 package ru.fizteh.fivt.students.kalandarovshakarim.filemap.commands;
 
-import ru.fizteh.fivt.storage.strings.Table;
-import ru.fizteh.fivt.students.kalandarovshakarim.filemap.table.OneTableBase;
+import ru.fizteh.fivt.storage.structured.Table;
+import ru.fizteh.fivt.students.kalandarovshakarim.filemap.table.TableInfo;
 
 /**
  *
@@ -13,7 +13,7 @@ import ru.fizteh.fivt.students.kalandarovshakarim.filemap.table.OneTableBase;
  */
 public class SizeCommand extends AbstractTableCommand {
 
-    public SizeCommand(OneTableBase context) {
+    public SizeCommand(TableInfo context) {
         super("size", 0, context);
     }
 

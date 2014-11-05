@@ -27,7 +27,7 @@ public class ShowTablesCommand extends AbstractCommand<DataBase> {
         }
 
         DataBaseProvider provider = (DataBaseProvider) context.getProvider();
-        List<String> list = provider.listTables();
+        List<String> list = null; //provider.listTables();
         System.out.printf("%-25srow_num%n", "table_name");
         String format = "%-25s%d%n";
         for (String tableName : list) {

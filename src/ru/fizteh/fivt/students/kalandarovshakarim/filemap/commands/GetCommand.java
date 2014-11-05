@@ -4,8 +4,9 @@
  */
 package ru.fizteh.fivt.students.kalandarovshakarim.filemap.commands;
 
-import ru.fizteh.fivt.storage.strings.Table;
-import ru.fizteh.fivt.students.kalandarovshakarim.filemap.table.OneTableBase;
+import ru.fizteh.fivt.storage.structured.Storeable;
+import ru.fizteh.fivt.storage.structured.Table;
+import ru.fizteh.fivt.students.kalandarovshakarim.filemap.table.TableInfo;
 
 /**
  *
@@ -13,13 +14,14 @@ import ru.fizteh.fivt.students.kalandarovshakarim.filemap.table.OneTableBase;
  */
 public class GetCommand extends AbstractTableCommand {
 
-    public GetCommand(OneTableBase context) {
+    public GetCommand(TableInfo context) {
         super("get", 1, context);
     }
 
     @Override
     protected void onActiveTable(Table activeTable, String[] args) {
-        String value = activeTable.get(args[0]);
+
+        Storeable value = activeTable.get(args[0]);
 
         if (value == null) {
             System.out.println("not found");

@@ -36,5 +36,5 @@ public abstract class AbstractCommand<Type> implements Command {
     @Override
     public int getArgsNum() {
         return argNum;
+        }
     }
-}

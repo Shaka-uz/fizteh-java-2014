@@ -10,7 +10,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import ru.fizteh.fivt.storage.strings.Table;
+import ru.fizteh.fivt.storage.structured.ColumnFormatException;
+import ru.fizteh.fivt.storage.structured.Storeable;
+import ru.fizteh.fivt.storage.structured.Table;
+import ru.fizteh.fivt.students.kalandarovshakarim.storeable.Utility;
 
 /**
  *
@@ -18,12 +21,14 @@ import ru.fizteh.fivt.storage.strings.Table;
  */
 public abstract class AbstractTable implements Table {
 
-    protected Map<String, String> table = new HashMap<>();
-    protected Map<String, String> oldData = new HashMap<>();
-    private String tableName = null;
+    protected Map<String, Storeable> table = new HashMap<>();
+    protected Map<String, Storeable> oldData = new HashMap<>();
+    private final String tableName;
+    private final Class<?>[] tableSignature;
 
-    public AbstractTable(String tableName) {
+    public AbstractTable(String tableName, String[] tableSignature) {
         this.tableName = tableName;
+        this.tableSignature = Utility.getSignature(tableSignature);
     }
 
     @Override
@@ -32,21 +37,21 @@ public abstract class AbstractTable implements Table {
     }
 
     @Override
-    public String get(String key) {
+    public Storeable get(String key) {
         checkArgument(key);
         return table.get(key);
     }
 
     @Override
-    public String put(String key, String value) {
+    public Storeable put(String key, Storeable value) throws ColumnFormatException {
         checkArgument(value);
-        
+
         if (table.containsKey(key) && value.equals(table.get(key))) {
             // If same value was overwritten.
             return value;
         }
 
-        String oldValue = table.put(key, value);
+        Storeable oldValue = table.put(key, value);
         if (!oldData.containsKey(key)) {
             // Value in key is changed first time.
             oldData.put(key, oldValue);
@@ -58,13 +63,13 @@ public abstract class AbstractTable implements Table {
     }
 
     @Override
-    public String remove(String key) {
+    public Storeable remove(String key) {
         checkArgument(key);
         if (!table.containsKey(key)) {
             return null;
         }
 
-        String oldValue = table.remove(key);
+        Storeable oldValue = table.remove(key);
 
         if (oldData.containsKey(key) && oldData.get(key) == null) {
             // If (key,value) which wasn't in first committed state removed.
@@ -82,24 +87,20 @@ public abstract class AbstractTable implements Table {
     }
 
     @Override
-    public int commit() {
+    public int commit() throws IOException {
         int uncommited = oldData.size();
         if (uncommited == 0) {
             return 0;
         }
 
-        try {
-            save();
-            oldData.clear();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        save();
+        oldData.clear();
         return uncommited;
     }
 
     @Override
     public int rollback() {
-        for (Entry<String, String> entry : oldData.entrySet()) {
+        for (Entry<String, Storeable> entry : oldData.entrySet()) {
             if (entry.getValue() != null) {
                 table.put(entry.getKey(), entry.getValue());
             } else {
@@ -112,9 +113,18 @@ public abstract class AbstractTable implements Table {
     }
 
     @Override
+    public int getColumnsCount() {
+        return tableSignature.length;
+    }
+
+    @Override
+    public Class<?> getColumnType(int columnIndex) throws IndexOutOfBoundsException {
+        return tableSignature[columnIndex];
+    }
+
     public List<String> list() {
         List<String> retVal = new ArrayList<>();
-        for (Entry<String, String> entry : table.entrySet()) {
+        for (Entry<String, Storeable> entry : table.entrySet()) {
             retVal.add(entry.getKey());
         }
         return retVal;
@@ -126,7 +136,7 @@ public abstract class AbstractTable implements Table {
 
     protected abstract void save() throws IOException;
 
-    void checkArgument(String argument) {
+    void checkArgument(Object argument) {
         if (argument == null) {
             throw new IllegalArgumentException("null");
         }

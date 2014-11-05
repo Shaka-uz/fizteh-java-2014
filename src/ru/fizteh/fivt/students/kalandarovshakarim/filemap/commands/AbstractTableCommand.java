@@ -5,17 +5,17 @@
 package ru.fizteh.fivt.students.kalandarovshakarim.filemap.commands;
 
 import java.io.IOException;
-import ru.fizteh.fivt.storage.strings.Table;
-import ru.fizteh.fivt.students.kalandarovshakarim.filemap.table.OneTableBase;
+import ru.fizteh.fivt.storage.structured.Table;
+import ru.fizteh.fivt.students.kalandarovshakarim.filemap.table.TableInfo;
 import ru.fizteh.fivt.students.kalandarovshakarim.shell.commands.AbstractCommand;
 
 /**
  *
  * @author shakarim
  */
-public abstract class AbstractTableCommand extends AbstractCommand<OneTableBase> {
+public abstract class AbstractTableCommand extends AbstractCommand<TableInfo> {
 
-    public AbstractTableCommand(String name, int argNum, OneTableBase context) {
+    public AbstractTableCommand(String name, int argNum, TableInfo context) {
         super(name, argNum, context);
     }
 
@@ -29,5 +29,5 @@ public abstract class AbstractTableCommand extends AbstractCommand<OneTableBase>
         }
     }
 
-    protected abstract void onActiveTable(Table activeTable, String[] args);
+    protected abstract void onActiveTable(Table activeTable, String[] args) throws IOException;
 }

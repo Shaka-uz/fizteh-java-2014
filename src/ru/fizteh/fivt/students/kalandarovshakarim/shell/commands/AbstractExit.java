@@ -5,9 +5,12 @@
  */
 package ru.fizteh.fivt.students.kalandarovshakarim.shell.commands;
 
+import java.io.IOException;
+
 /**
  *
  * @author Shakarim
+ * @param <Type>
  */
 public abstract class AbstractExit<Type> extends AbstractCommand<Type> {
 
@@ -16,10 +19,10 @@ public abstract class AbstractExit<Type> extends AbstractCommand<Type> {
     }
 
     @Override
-    public void exec(String[] args) {
+    public void exec(String[] args) throws IOException {
         onExit();
         System.exit(args.length);
     }
 
-    protected abstract void onExit();
+    protected abstract void onExit() throws IOException;
 }

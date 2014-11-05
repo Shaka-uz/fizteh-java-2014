@@ -4,6 +4,7 @@
  */
 package ru.fizteh.fivt.students.kalandarovshakarim.multifilehashmap.commands;
 
+import java.io.IOException;
 import ru.fizteh.fivt.students.kalandarovshakarim.multifilehashmap.database.DataBase;
 import ru.fizteh.fivt.students.kalandarovshakarim.shell.commands.AbstractCommand;
 
@@ -18,7 +19,7 @@ public class DropCommand extends AbstractCommand<DataBase> {
     }
 
     @Override
-    public void exec(String[] args) {
+    public void exec(String[] args) throws IOException {
         context.getProvider().removeTable(args[0]);
         if (args[0].equals(context.getActiveTable().getName())) {
             context.setActiveTable(null);

@@ -5,7 +5,7 @@
 package ru.fizteh.fivt.students.kalandarovshakarim.multifilehashmap.commands;
 
 import java.io.IOException;
-import ru.fizteh.fivt.storage.strings.Table;
+import ru.fizteh.fivt.storage.structured.Table;
 import ru.fizteh.fivt.students.kalandarovshakarim.filemap.table.AbstractTable;
 import ru.fizteh.fivt.students.kalandarovshakarim.multifilehashmap.database.DataBase;
 import ru.fizteh.fivt.students.kalandarovshakarim.shell.commands.AbstractCommand;

@@ -6,6 +6,7 @@ package ru.fizteh.fivt.students.kalandarovshakarim.filemap.table;
 
 import java.io.IOException;
 import java.util.Map.Entry;
+import ru.fizteh.fivt.storage.structured.Storeable;
 
 /**
  *
@@ -13,8 +14,8 @@ import java.util.Map.Entry;
  */
 public class SingleFileTable extends AbstractTable {
 
-    public SingleFileTable(String tableName) throws IOException {
-        super(tableName);
+    public SingleFileTable(String tableName, String[] tableStucture) throws IOException {
+        super(tableName, tableStucture);
         load();
     }
 
@@ -26,7 +27,7 @@ public class SingleFileTable extends AbstractTable {
             while (!reader.eof()) {
                 key = reader.read();
                 value = reader.read();
-                table.put(key, value);
+                //table.put(key, value);
             }
         }
     }
@@ -35,9 +36,9 @@ public class SingleFileTable extends AbstractTable {
     protected void save() throws IOException {
         try (TableWriter writer = new TableWriter(getName())) {
             long fileLen = 0;
-            for (Entry<String, String> entry : table.entrySet()) {
+            for (Entry<String, Storeable> entry : table.entrySet()) {
                 fileLen += writer.write(entry.getKey());
-                fileLen += writer.write(entry.getValue());
+                //fileLen += writer.write(entry.getValue());
             }
             writer.setLength(fileLen);
         }

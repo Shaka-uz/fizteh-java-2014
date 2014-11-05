@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map.Entry;
+import ru.fizteh.fivt.storage.structured.Storeable;
 import ru.fizteh.fivt.students.kalandarovshakarim.filemap.table.AbstractTable;
 import ru.fizteh.fivt.students.kalandarovshakarim.filemap.table.TableReader;
 import ru.fizteh.fivt.students.kalandarovshakarim.filemap.table.TableWriter;
@@ -26,7 +27,7 @@ public class MultiFileTable extends AbstractTable {
     private final Path directoryPath;
 
     public MultiFileTable(String directory, String tableName) throws IOException {
-        super(tableName);
+        super(tableName, new String[]{"String"});
         directoryPath = Paths.get(directory, tableName);
         if (!Files.exists(directoryPath)) {
             Files.createDirectory(directoryPath);
@@ -56,9 +57,9 @@ public class MultiFileTable extends AbstractTable {
         TableWriter[][] writers = new TableWriter[DIRECTORIES_NUMBER][FILES_NUMBER];
 
         try {
-            for (Entry<String, String> entry : table.entrySet()) {
+            for (Entry<String, Storeable> entry : table.entrySet()) {
                 String key = entry.getKey();
-                String value = entry.getValue();
+                Storeable value = entry.getValue();
                 int hashCode = Math.abs(key.hashCode());
                 int nDir = hashCode % DIRECTORIES_NUMBER;
                 int nFile = hashCode / DIRECTORIES_NUMBER % FILES_NUMBER;
@@ -75,7 +76,7 @@ public class MultiFileTable extends AbstractTable {
                 }
 
                 writers[nDir][nFile].write(key);
-                writers[nDir][nFile].write(value);
+//                writers[nDir][nFile].write(value);
             }
         } finally {
             for (int dir = 0; dir < DIRECTORIES_NUMBER; ++dir) {
@@ -109,7 +110,7 @@ public class MultiFileTable extends AbstractTable {
                             String eMassage = String.format(format, fileName);
                             throw new IOException(eMassage);
                         }
-                        table.put(key, value);
+//                        table.put(key, value);
                     }
                 }
             }

@@ -4,8 +4,8 @@
  */
 package ru.fizteh.fivt.students.kalandarovshakarim.filemap.commands;
 
-import ru.fizteh.fivt.storage.strings.Table;
-import ru.fizteh.fivt.students.kalandarovshakarim.filemap.table.OneTableBase;
+import ru.fizteh.fivt.storage.structured.Table;
+import ru.fizteh.fivt.students.kalandarovshakarim.filemap.table.TableInfo;
 
 /**
  *
@@ -13,7 +13,7 @@ import ru.fizteh.fivt.students.kalandarovshakarim.filemap.table.OneTableBase;
  */
 public class RollbackCommand extends AbstractTableCommand {
 
-    public RollbackCommand(OneTableBase context) {
+    public RollbackCommand(TableInfo context) {
         super("rollback", 0, context);
     }
 

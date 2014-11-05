@@ -4,8 +4,9 @@
  */
 package ru.fizteh.fivt.students.kalandarovshakarim.filemap.commands;
 
-import ru.fizteh.fivt.storage.strings.Table;
-import ru.fizteh.fivt.students.kalandarovshakarim.filemap.table.OneTableBase;
+import ru.fizteh.fivt.storage.structured.Table;
+import ru.fizteh.fivt.students.kalandarovshakarim.filemap.table.AbstractTable;
+import ru.fizteh.fivt.students.kalandarovshakarim.filemap.table.TableInfo;
 
 /**
  *
@@ -13,13 +14,13 @@ import ru.fizteh.fivt.students.kalandarovshakarim.filemap.table.OneTableBase;
  */
 public class ListCommand extends AbstractTableCommand {
 
-    public ListCommand(OneTableBase context) {
+    public ListCommand(TableInfo context) {
         super("list", 0, context);
     }
 
     @Override
     protected void onActiveTable(Table activeTable, String[] args) {
-        String keyList = String.join(", ", activeTable.list());
+        String keyList = String.join(", ", ((AbstractTable) activeTable).list());
         System.out.println(keyList);
     }
 }

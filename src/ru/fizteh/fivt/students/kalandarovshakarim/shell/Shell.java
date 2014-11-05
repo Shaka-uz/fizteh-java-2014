@@ -23,6 +23,7 @@ public class Shell {
 
     private final Map<String, Command> supportedCmds;
     private final String[] args;
+    private static final String PROMPT = "$ ";
 
     public Shell(Command[] commands, String[] args) {
         this.supportedCmds = new HashMap<>();
@@ -34,11 +35,11 @@ public class Shell {
 
     private int interactiveMode() {
         try (Scanner input = new Scanner(System.in)) {
-            System.out.print("$ ");
+            System.out.print(PROMPT);
             while (input.hasNextLine()) {
                 String command = input.nextLine();
                 processCommand(command);
-                System.out.print("$ ");
+                System.out.print(PROMPT);
             }
             System.out.println();
         }

@@ -4,22 +4,23 @@
  */
 package ru.fizteh.fivt.students.kalandarovshakarim.filemap.commands;
 
-import ru.fizteh.fivt.storage.strings.Table;
-import ru.fizteh.fivt.students.kalandarovshakarim.filemap.table.OneTableBase;
+import java.io.IOException;
+import ru.fizteh.fivt.storage.structured.Table;
+import ru.fizteh.fivt.students.kalandarovshakarim.filemap.table.TableInfo;
 import ru.fizteh.fivt.students.kalandarovshakarim.shell.commands.AbstractExit;
 
 /**
  *
  * @author shakarim
  */
-public class ExitCommand extends AbstractExit<OneTableBase> {
+public class ExitCommand extends AbstractExit<TableInfo> {
 
-    public ExitCommand(OneTableBase context) {
+    public ExitCommand(TableInfo context) {
         super(context);
     }
 
     @Override
-    protected void onExit() {
+    protected void onExit() throws IOException {
         Table activeTable = context.getActiveTable();
 
         if (activeTable != null) {

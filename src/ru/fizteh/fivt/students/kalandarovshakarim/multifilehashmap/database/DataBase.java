@@ -4,24 +4,16 @@
  */
 package ru.fizteh.fivt.students.kalandarovshakarim.multifilehashmap.database;
 
-import ru.fizteh.fivt.storage.strings.*;
-import ru.fizteh.fivt.students.kalandarovshakarim.filemap.table.OneTableBase;
+import java.io.IOException;
+import ru.fizteh.fivt.students.kalandarovshakarim.filemap.table.TableInfo;
 
 /**
  *
  * @author shakarim
  */
-public class DataBase extends OneTableBase {
+public class DataBase extends TableInfo {
 
-    private final TableProviderFactory factory;
-    private final TableProvider provider;
-
-    public DataBase(String pathToDataBase) {
-        this.factory = new DataBaseProviderFactory();
-        this.provider = factory.create(pathToDataBase);
-    }
-
-    public TableProvider getProvider() {
-        return provider;
+    public DataBase(String pathToDataBase) throws IOException {
+        super(new DataBaseProviderFactory().create(pathToDataBase), null);
     }
 }
